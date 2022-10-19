@@ -7,14 +7,5 @@ import { MoviesService } from './services/movies.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  constructor(private moviesService: MoviesService){
-    this.moviesService.getBilboard()
-    .subscribe(
-      {
-        next: (resp) => {
-          console.log(resp);
-        }
-      }
-    )
-  }
+  
 }
