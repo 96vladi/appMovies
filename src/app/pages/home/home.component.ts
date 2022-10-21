@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { Movie } from 'src/app/interfaces/bilboardResponse';
 import { MoviesService } from 'src/app/services/movies.service';
 
@@ -10,6 +10,23 @@ import { MoviesService } from 'src/app/services/movies.service';
 export class HomeComponent implements OnInit {
 
   public movies: Movie[] = [];
+  public moviesSlideshow: Movie[] = [];
+
+  @HostListener('window:scroll', ['$event'])
+  onScroll(){
+    const pos = (document.documentElement.scrollTop || document.body.scrollTop) + 1300;
+    const max = (document.documentElement.scrollHeight || document.body.scrollHeight);
+    if(pos > max){
+      this.moviesService.getBilboard().subscribe(
+        {
+          next: (resp) => {
+            this.movies.push(...resp.results);
+          }
+        }
+      );
+    }
+  }
+  
 
   constructor(private moviesService : MoviesService) { }
 
@@ -20,6 +37,7 @@ export class HomeComponent implements OnInit {
         next: (resp) => {
           // console.log(resp);
           this.movies = resp.results;
+          this.moviesSlideshow = resp.results;
         }
       }
     )
