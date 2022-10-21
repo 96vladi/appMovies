@@ -17,10 +17,11 @@ export class HomeComponent implements OnInit {
     const pos = (document.documentElement.scrollTop || document.body.scrollTop) + 1300;
     const max = (document.documentElement.scrollHeight || document.body.scrollHeight);
     if(pos > max){
+      if(this.moviesService.charging){return;}
       this.moviesService.getBilboard().subscribe(
         {
-          next: (resp) => {
-            this.movies.push(...resp.results);
+          next: (res) => {
+            this.movies.push(...res.results);
           }
         }
       );
