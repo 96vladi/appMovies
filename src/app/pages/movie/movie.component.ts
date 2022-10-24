@@ -1,5 +1,7 @@
+import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { MovieResponse } from 'src/app/interfaces/movieResponse';
 import { MoviesService } from 'src/app/services/movies.service';
 
 @Component({
@@ -8,10 +10,12 @@ import { MoviesService } from 'src/app/services/movies.service';
   styleUrls: ['./movie.component.css']
 })
 export class MovieComponent implements OnInit {
+  public movie!: MovieResponse;
 
   constructor(
     private activatedRoute: ActivatedRoute,
-    private movieService: MoviesService) { }
+    private movieService: MoviesService,
+    private location: Location) { }
 
   ngOnInit(): void {
     const {id} = this.activatedRoute.snapshot.params; 
@@ -19,9 +23,14 @@ export class MovieComponent implements OnInit {
       {
         next: (movie) => {
           console.log(movie)
+          this.movie = movie;
         }
       }
     );
+  }
+
+  onReturn(){
+    this.location.back();
   }
 
 }
