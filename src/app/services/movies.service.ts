@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { map, tap } from 'rxjs/operators'
 import { BillboardResponse, Movie } from '../interfaces/bilboardResponse';
+import { MovieResponse } from '../interfaces/movieResponse';
 
 @Injectable({
   providedIn: 'root'
@@ -54,5 +55,11 @@ export class MoviesService {
     }).pipe(
       map( resp => resp.results )
     )
+  }
+
+  getMoviesDetails(id: String){
+    return this.http.get<MovieResponse>(`${this.baseUrl}/movie/${id}`,{
+      params: this.params
+    });
   }
 }
