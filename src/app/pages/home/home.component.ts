@@ -1,4 +1,4 @@
-import { Component, OnInit, HostListener } from '@angular/core';
+import { Component, OnInit, HostListener, OnDestroy } from '@angular/core';
 import { Movie } from 'src/app/interfaces/bilboardResponse';
 import { MoviesService } from 'src/app/services/movies.service';
 
@@ -7,7 +7,7 @@ import { MoviesService } from 'src/app/services/movies.service';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, OnDestroy {
 
   public movies: Movie[] = [];
   public moviesSlideshow: Movie[] = [];
@@ -35,12 +35,16 @@ export class HomeComponent implements OnInit {
     .subscribe(
       {
         next: (resp) => {
-          // console.log(resp);
+          //console.log(resp);
           this.movies = resp.results;
           this.moviesSlideshow = resp.results;
         }
       }
     )
+  }
+
+  ngOnDestroy(): void {
+    this.moviesService.resetBilboardPage();
   }
 
 }

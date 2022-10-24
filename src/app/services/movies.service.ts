@@ -22,6 +22,10 @@ export class MoviesService {
     }
   }
 
+  resetBilboardPage(){
+    this.bildboardPage = 1;
+  }
+
   getBilboard() :Observable<BillboardResponse>{
     // if(this.charging){
     //    return of([]);
@@ -37,6 +41,18 @@ export class MoviesService {
         this.bildboardPage += 1;
         this.charging = false;
       })
+    )
+  }
+
+  searchMovie( text: string ):Observable<Movie[]> {
+    
+    const params = {...this.params, page: '1', query: text };
+
+    // https://api.themoviedb.org/3/search/movie
+    return this.http.get<BillboardResponse>(`${ this.baseUrl }/search/movie`, {
+      params
+    }).pipe(
+      map( resp => resp.results )
     )
   }
 }
