@@ -38,3 +38,10 @@
     </div>
   </div>
 </div>
+<div class="row mt-5" *ngIf="cast">
+  <div class="col">
+    <app-cast-slideshow
+      [cast]="cast"
+    ></app-cast-slideshow>
+  </div>
+</div>
