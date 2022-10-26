@@ -39,7 +39,7 @@ export class MovieComponent implements OnInit {
       {
         next:(cast) => {
           console.log(cast);
-          this.cast = cast;
+          this.cast = cast.filter(actor => actor.profile_path !== null);
         }
       }
     );

@@ -4,7 +4,7 @@ import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators'
 import { BillboardResponse, Movie } from '../interfaces/bilboardResponse';
 import { MovieResponse } from '../interfaces/movieResponse';
-import { CreditsResponse } from '../interfaces/creditsResponse';
+import { Cast, CreditsResponse } from '../interfaces/creditsResponse';
 
 @Injectable({
   providedIn: 'root'
@@ -66,7 +66,7 @@ export class MoviesService {
     )
   }
 
-  getCast(id: String){
+  getCast(id: String): Observable<Cast[]>{
     return this.http.get<CreditsResponse>(`${this.baseUrl}/movie/${id}/credits`,{
       params: this.params
     }).pipe(
